@@ -8,6 +8,7 @@ Created on Sat Mar 20 22:23:14 2021
 import pygame
 import sys
 from pygame.locals import *
+import random
 
 pygame.init()
 
@@ -33,9 +34,22 @@ player_pos = [int(size[0]/2), size[1] - 300]
 
 # Collect
 collect_img = pygame.image.load("bone.png")
+collect_size = 30
+collect_pos = [random.randint(0, size[0]-collect_size), 0]
+collect_list = [collect_pos]
+collect_speed = 7
 
+def show_collect(collect_list):
+    delay = random.random()
+    if len(collect_list) < 10 and delay < 0.06:
+        collect_list.append([random.randint(0, size[0]-collect_size), 0])
+
+def display_collect(collect_list):
+    for collect_pos in collect_list:
+        screen.blit(collect_img, (collect_pos[0], collect_pos[1]))
 
 flag = True
+score = 0
 clock = pygame.time.Clock()
 while flag:
     screen.fill(white)
@@ -52,7 +66,11 @@ while flag:
             player_pos = player_pos
     #screen.fill(white)
     #pygame.draw.rect(screen, red, [55, 200, 100, 70],0)
-    pygame.display.flip()
-    clock.tick(60)
+    show_collect(collect_list)
+    display_collect(collect_list)
+    screen.blit(player_img,(player_pos[0],player_pos[1]))
+    #pygame.display.flip()
+    clock.tick(20)
+    pygame.display.update()
             
 pygame.quit()
