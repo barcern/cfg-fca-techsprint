@@ -48,6 +48,15 @@ def display_collect(collect_list):
     for collect_pos in collect_list:
         screen.blit(collect_img, (collect_pos[0], collect_pos[1]))
 
+def new_collect_pos(collect_list):
+    for idx, collect_pos in enumerate(collect_list):
+        if collect_pos[1]>=0 and collect_pos[1]<size[1]:
+            collect_pos[1]+=collect_speed
+        else:
+            collect_list.pop(idx)
+            #score+=1
+    #return score
+
 flag = True
 score = 0
 clock = pygame.time.Clock()
@@ -67,6 +76,7 @@ while flag:
     #screen.fill(white)
     #pygame.draw.rect(screen, red, [55, 200, 100, 70],0)
     show_collect(collect_list)
+    new_collect_pos(collect_list)
     display_collect(collect_list)
     screen.blit(player_img,(player_pos[0],player_pos[1]))
     #pygame.display.flip()
