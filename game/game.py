@@ -202,13 +202,13 @@ def gameover(score):
     text="Your Total Jewels: "+str(125)
     label=myFont.render(text, 1, (0, 0, 0))
     screen.blit(label,(int(size[0]/2)-150,int(size[1]/2-20)))
-    text="Play Again"
+    text="Play Again (y)"
     label=myFont.render(text, 1, (0, 0, 0))
     screen.blit(label,(int(size[0]/2)-400,int(size[1]/2)+80))
-    text="Buy Power Ups"
+    text="Buy Power Ups (p)"
     label=myFont.render(text, 1, (0, 0, 0))
     screen.blit(label,(int(size[0]/2)-120,int(size[1]/2)+80))
-    text="Quit"
+    text="Quit (n)"
     label=myFont.render(text, 1, (0, 0, 0))
     screen.blit(label,(int(size[0]/2)+300,int(size[1]/2)+80))
     screen.blit(player_img_sleep, (int(size[0]/2)-120, int(size[1])-270))
@@ -249,6 +249,7 @@ score = 0
 jewels = 0
 lives = 3
 clock = pygame.time.Clock()
+#init()
 while flag:
     if lives > 0:
         screen.fill(white)
@@ -302,10 +303,17 @@ while flag:
         gameover(score)
         pygame.display.update()
         for event in pygame.event.get():
-            if event.type==pygame.QUIT:
+            if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_n):
                 pygame.display.quit()
                 pygame.quit()
                 sys.exit()
+            elif event.type==pygame.KEYDOWN:
+                if event.key==pygame.K_y:
+                    flag = True
+                    score = 0
+                    jewels = 0
+                    lives = 3
+                    clock = pygame.time.Clock()
     pygame.display.update()
             
 pygame.quit()
