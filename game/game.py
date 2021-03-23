@@ -146,8 +146,6 @@ def collide_collect(player_pos, collect_pos, score):
     if (c_x>=p_x and c_x<(p_x+player_size)) or (p_x>=c_x and p_x<(c_x+collect_size)):
         if(c_y>=p_y and c_y<(p_y+player_size)) or (p_y>=c_y and p_y<(c_y+collect_size)):
             score += 1
-            
-            return score
     return score
 
 # Jewel functions
