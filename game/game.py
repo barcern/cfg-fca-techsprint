@@ -23,8 +23,10 @@ red = (255, 0, 0)
 # Open a new window
 size = (1000, 700)
 screen = pygame.display.set_mode(size)
-pygame.display.set_caption("TO BE NAMED")
+pygame.display.set_caption("Puppy Power")
 background = pygame.image.load("background.jpg")
+icon=pygame.image.load("dog_wait.png")
+pygame.display.set_icon(icon)
 
 # Player
 player_img = pygame.image.load("dog_walk.png")
@@ -206,9 +208,9 @@ def gameover(score):
     text="Quit (n)"
     label=myFont.render(text, 1, (0, 0, 0))
     screen.blit(label,(int(size[0]/2)+200,int(size[1]/2)+20))
-    text="Power Ups available on the website"
+    text="Use your Jewels to purchase Power Ups - available on the website"
     label=myFont.render(text, 1, (0, 0, 0))
-    screen.blit(label,(int(size[0]/2)-250,int(size[1]/2)+80))
+    screen.blit(label,(int(size[0]/2)-470,int(size[1]/2)+80))
     screen.blit(player_img_sleep, (int(size[0]/2)-120, int(size[1])-270))
 
 # Start screen
@@ -217,9 +219,9 @@ end_it=False
 while (end_it==False):
     screen.fill(white)
     screen.blit(background, (0,0))
-    text = "Welcome to *insert name* game!"
+    text = "Welcome to Puppy Power!"
     label=myFont.render(text, 1, (0, 0, 0))
-    screen.blit(label,(int(size[0]/2)-250,int(size[1]/2)-200))
+    screen.blit(label,(int(size[0]/2)-200,int(size[1]/2)-200))
     text = "Aims of the game:"
     label=myFont.render(text, 1, (0, 0, 0))
     screen.blit(label,(int(size[0]/2)-200,int(size[1]/2)-50))
