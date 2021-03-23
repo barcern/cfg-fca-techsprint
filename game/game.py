@@ -30,7 +30,7 @@ background = pygame.image.load("background.jpg")
 player_img = pygame.image.load("dog_walk.png")
 player_img_sleep = pygame.image.load("dog_sleep.png")
 player_img_wait = pygame.image.load("dog_wait.png")
-player_size = 70
+player_size = 120
 player_pos = [int(size[0]/2), size[1] - 300]
 
 # Enemy
@@ -283,10 +283,10 @@ while flag:
         text="Score: "+str(score)
         label=myFont.render(text, 1, (0, 0, 0))
         screen.blit(label,(int(size[0]-250),0))
-        text="Lives: "+str(lives)
+        text="Jewels: "+str(jewels)
         label=myFont.render(text, 1, (0, 0, 0))
         screen.blit(label,(int(size[0]-250),40))
-        text="Jewels: "+str(jewels)
+        text="Lives: "+str(lives)
         label=myFont.render(text, 1, (0, 0, 0))
         screen.blit(label,(int(size[0]-250),80))
         # Display updates
