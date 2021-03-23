@@ -29,7 +29,7 @@ background = pygame.image.load("background.jpg")
 # Player
 player_img = pygame.image.load("dog_walk.png")
 player_img_sleep = pygame.image.load("dog_sleep.png")
-#player_img_wait = pygame.image.load("dog_wait.jpg")
+player_img_wait = pygame.image.load("dog_wait.png")
 player_size = 70
 player_pos = [int(size[0]/2), size[1] - 300]
 
@@ -213,8 +213,37 @@ def gameover(score):
     screen.blit(label,(int(size[0]/2)+300,int(size[1]/2)+80))
     screen.blit(player_img_sleep, (int(size[0]/2)-120, int(size[1])-270))
 
-
+# Start screen
 myFont=pygame.font.SysFont("calibri",35, bold=True, italic=True)
+end_it=False
+while (end_it==False):
+    screen.fill(white)
+    screen.blit(background, (0,0))
+    text = "Welcome to *insert name* game!"
+    label=myFont.render(text, 1, (0, 0, 0))
+    screen.blit(label,(int(size[0]/2)-250,int(size[1]/2)-200))
+    text = "Aims of the game:"
+    label=myFont.render(text, 1, (0, 0, 0))
+    screen.blit(label,(int(size[0]/2)-200,int(size[1]/2)-50))
+    text = "- eat as many bones as possible"
+    label=myFont.render(text, 1, (0, 0, 0))
+    screen.blit(label,(int(size[0]/2)-200,int(size[1]/2)-0))
+    text = "- collect as many jewels as possible"
+    label=myFont.render(text, 1, (0, 0, 0))
+    screen.blit(label,(int(size[0]/2)-200,int(size[1]/2)+50))
+    text = "- avoid the chocolate!"
+    label=myFont.render(text, 1, (0, 0, 0))
+    screen.blit(label,(int(size[0]/2)-200,int(size[1]/2)+100))
+    text = "Click anywhere to start"
+    label=myFont.render(text, 1, (0, 0, 0))
+    screen.blit(label,(int(size[0]/2)-200,int(size[1]/2)+250))
+    screen.blit(player_img_wait, (50, int(size[1]/2)+0))
+    for event in pygame.event.get():
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            end_it=True
+    pygame.display.flip()
+
+# Running loop
 flag = True
 score = 0
 jewels = 0
