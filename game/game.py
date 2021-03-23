@@ -28,6 +28,8 @@ background = pygame.image.load("background.jpg")
 
 # Player
 player_img = pygame.image.load("dog_walk.png")
+player_img_sleep = pygame.image.load("dog_sleep.png")
+#player_img_wait = pygame.image.load("dog_wait.jpg")
 player_size = 70
 player_pos = [int(size[0]/2), size[1] - 300]
 
@@ -36,7 +38,7 @@ enemy_img = pygame.image.load("chocolate.png")
 enemy_size = 30
 enemy_pos = [random.randint(0, size[0]-enemy_size), 0]
 enemy_list = [enemy_pos]
-enemy_speed = 10
+enemy_speed = 5
 
 # Collect
 #collect_img = pygame.image.load("chocolate.png")
@@ -45,6 +47,13 @@ collect_size = 30
 collect_pos = [random.randint(0, size[0]-collect_size), 0]
 collect_list = [collect_pos]
 collect_speed = 5
+
+# Jewel
+jewel_img = pygame.image.load("jewel.png")
+jewel_size = 30
+jewel_pos = [random.randint(0, size[0]-jewel_size), 0]
+jewel_list = [jewel_pos]
+jewel_speed = 15
 
 # Enemy functions
 def show_enemy(enemy_list, enemy_count):
@@ -141,19 +150,56 @@ def collide_collect(player_pos, collect_pos, score):
             return score
     return score
 
+# Jewel functions
+def show_jewel(jewel_list):
+    delay = random.random()
+    if len(jewel_list) < 1 and delay < 0.001:
+        jewel_list.append([random.randint(0, size[0]-jewel_size), 0])
+
+def display_jewel(jewel_list):
+    for jewel_pos in jewel_list:
+        screen.blit(jewel_img, (jewel_pos[0], jewel_pos[1]))
+
+def new_jewel_pos(jewel_list):
+    for idx, jewel_pos in enumerate(jewel_list):
+        if jewel_pos[1]>=0 and jewel_pos[1]<size[1]:
+            jewel_pos[1]+=jewel_speed
+        else:
+            jewel_list.pop(idx)
+            #score+=1
+    #return score
+
+def multi_collide_jewel(player_pos, jewel_list, jewels):
+    for jewel_pos in jewel_list:
+        old_jewels = jewels
+        jewels = collide_jewel(player_pos, jewel_pos, jewels)
+        if old_jewels != jewels:
+            jewel_list.remove(jewel_pos)
+    return jewels
+
+def collide_jewel(player_pos, jewel_pos, jewels):
+    p_x = player_pos[0]
+    p_y = player_pos[1]
+    j_x = jewel_pos[0]
+    j_y = jewel_pos[1]
+    if (j_x>=p_x and j_x<(p_x+player_size)) or (p_x>=j_x and p_x<(j_x+jewel_size)):
+        if(j_y>=p_y and j_y<(p_y+player_size)) or (p_y>=j_y and p_y<(j_y+jewel_size)):
+            jewels += 1
+    return jewels
+
 # Game over
 def gameover(score):
     screen.blit(background,(0,0))
     text=" GAME OVER"
     label=myFont.render(text, 1, (0, 0, 0))
-    screen.blit(label,(int(size[0]/2)-150,int(size[1]/2)-200))
+    screen.blit(label,(int(size[0]/2)-120,int(size[1]/2)-200))
     text="Your Score: "+str(score)
     label=myFont.render(text, 1, (0, 0, 0))
     screen.blit(label,(int(size[0]/2)-150,int(size[1]/2-100)))
-    text="Your Current Jewels: "+str(score)
+    text="Your Current Jewels: "+str(jewels)
     label=myFont.render(text, 1, (0, 0, 0))
     screen.blit(label,(int(size[0]/2)-150,int(size[1]/2-60)))
-    text="Your Total Jewels: "+str(score)
+    text="Your Total Jewels: "+str(125)
     label=myFont.render(text, 1, (0, 0, 0))
     screen.blit(label,(int(size[0]/2)-150,int(size[1]/2-20)))
     text="Play Again"
@@ -161,15 +207,17 @@ def gameover(score):
     screen.blit(label,(int(size[0]/2)-400,int(size[1]/2)+80))
     text="Buy Power Ups"
     label=myFont.render(text, 1, (0, 0, 0))
-    screen.blit(label,(int(size[0]/2)-100,int(size[1]/2)+80))
+    screen.blit(label,(int(size[0]/2)-120,int(size[1]/2)+80))
     text="Quit"
     label=myFont.render(text, 1, (0, 0, 0))
     screen.blit(label,(int(size[0]/2)+300,int(size[1]/2)+80))
+    screen.blit(player_img_sleep, (int(size[0]/2)-120, int(size[1])-270))
 
 
 myFont=pygame.font.SysFont("calibri",35, bold=True, italic=True)
 flag = True
 score = 0
+jewels = 0
 lives = 3
 clock = pygame.time.Clock()
 while flag:
@@ -192,24 +240,31 @@ while flag:
         enemy_values = difficulty(score)
         enemy_speed = enemy_values[0]
         enemy_count = enemy_values[1]
-        # Initiate bones and chocolates
+        # Initiate bones and chocolates and jewels
         show_collect(collect_list)
         show_enemy(enemy_list, enemy_count)
+        show_jewel(jewel_list)
         new_collect_pos(collect_list)
         new_enemy_pos(enemy_list, enemy_speed)
+        new_jewel_pos(jewel_list)
         # Update score and lives in case of collision
         score = multi_collide_collect(player_pos, collect_list, score)
         lives = multi_collide_enemy(player_pos, enemy_list, lives)
-        # Show score and lives
-        text="Your Score: "+str(score)
+        jewels = multi_collide_jewel(player_pos, jewel_list, jewels)
+        # Show score and lives and jewels
+        text="Score: "+str(score)
         label=myFont.render(text, 1, (0, 0, 0))
         screen.blit(label,(int(size[0]-250),0))
-        text="Your Lives: "+str(lives)
+        text="Lives: "+str(lives)
         label=myFont.render(text, 1, (0, 0, 0))
         screen.blit(label,(int(size[0]-250),40))
+        text="Jewels: "+str(jewels)
+        label=myFont.render(text, 1, (0, 0, 0))
+        screen.blit(label,(int(size[0]-250),80))
         # Display updates
         display_collect(collect_list)
         display_enemy(enemy_list)
+        display_jewel(jewel_list)
         screen.blit(player_img,(player_pos[0],player_pos[1]))
         #pygame.display.flip()
         clock.tick(30)
