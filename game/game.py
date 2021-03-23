@@ -192,25 +192,25 @@ def gameover(score):
     screen.blit(background,(0,0))
     text=" GAME OVER"
     label=myFont.render(text, 1, (0, 0, 0))
-    screen.blit(label,(int(size[0]/2)-120,int(size[1]/2)-200))
+    screen.blit(label,(int(size[0]/2)-120,int(size[1]/2)-250))
     text="Your Score: "+str(score)
     label=myFont.render(text, 1, (0, 0, 0))
-    screen.blit(label,(int(size[0]/2)-150,int(size[1]/2-100)))
+    screen.blit(label,(int(size[0]/2)-150,int(size[1]/2-140)))
     text="Your Current Jewels: "+str(jewels)
     label=myFont.render(text, 1, (0, 0, 0))
-    screen.blit(label,(int(size[0]/2)-150,int(size[1]/2-60)))
+    screen.blit(label,(int(size[0]/2)-150,int(size[1]/2-100)))
     text="Your Total Jewels: "+str(125)
     label=myFont.render(text, 1, (0, 0, 0))
-    screen.blit(label,(int(size[0]/2)-150,int(size[1]/2-20)))
+    screen.blit(label,(int(size[0]/2)-150,int(size[1]/2-60)))
     text="Play Again (y)"
     label=myFont.render(text, 1, (0, 0, 0))
-    screen.blit(label,(int(size[0]/2)-400,int(size[1]/2)+80))
-    text="Buy Power Ups (p)"
-    label=myFont.render(text, 1, (0, 0, 0))
-    screen.blit(label,(int(size[0]/2)-120,int(size[1]/2)+80))
+    screen.blit(label,(int(size[0]/2)-300,int(size[1]/2)+20))
     text="Quit (n)"
     label=myFont.render(text, 1, (0, 0, 0))
-    screen.blit(label,(int(size[0]/2)+300,int(size[1]/2)+80))
+    screen.blit(label,(int(size[0]/2)+200,int(size[1]/2)+20))
+    text="Power Ups available on the website"
+    label=myFont.render(text, 1, (0, 0, 0))
+    screen.blit(label,(int(size[0]/2)-250,int(size[1]/2)+80))
     screen.blit(player_img_sleep, (int(size[0]/2)-120, int(size[1])-270))
 
 # Start screen
